@@ -262,6 +262,42 @@ endif()
 
 
 
+
+# =============================================================================
+# FreeRTOS Kernel
+# Enabled for application firmware, not the bootloader
+# =============================================================================
+
+if(NOT BOOTLOADER_VALUE EQUAL 1)
+
+    set(FREERTOS_DIR
+        ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeRTOS-Kernel
+    )
+
+    target_sources(${PROJECT_NAME} PRIVATE
+
+        ${FREERTOS_DIR}/tasks.c
+        ${FREERTOS_DIR}/queue.c
+        ${FREERTOS_DIR}/list.c
+        ${FREERTOS_DIR}/timers.c
+        ${FREERTOS_DIR}/event_groups.c
+        ${FREERTOS_DIR}/stream_buffer.c
+
+        ${FREERTOS_DIR}/portable/GCC/ARM_CM4F/port.c
+        ${FREERTOS_DIR}/portable/MemMang/heap_4.c
+
+    )
+
+    target_include_directories(${PROJECT_NAME} PRIVATE
+
+        ${FREERTOS_DIR}/include
+        ${FREERTOS_DIR}/portable/GCC/ARM_CM4F
+
+    )
+
+endif() 
+
+  
 # =============================================================================
 # Include Directories
 # =============================================================================
